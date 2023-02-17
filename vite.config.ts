@@ -2,20 +2,41 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Unocss from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-// https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({}),
     AutoImport({
-      resolvers: [AntDesignVueResolver()],
-      imports: ['vue', 'vue-router', 'pinia'],
-      dts: 'types/auto-imports.d.ts'
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+        /\.md$/ // .md
+      ],
+      dirs: [
+        // './src/utils'
+      ],
+      resolvers: [NaiveUiResolver()],
+      imports: [
+        'vue',
+        'vue-router',
+        'pinia',
+        {
+          // '[package-name]': [
+          //   '[import-names]',
+          //   // alias
+          //   ['[from]', '[alias]']
+          // ]
+        }
+      ],
+      dts: 'types/auto-imports.d.ts',
+      vueTemplate: true
     }),
     Components({
-      resolvers: [AntDesignVueResolver()],
+      resolvers: [NaiveUiResolver()],
       dts: 'types/components.d.ts'
     }),
     Unocss({
