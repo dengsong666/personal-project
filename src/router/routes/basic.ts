@@ -11,9 +11,25 @@ export const basicRoutes: RouteRecordRaw[] = [
     component: Home
   },
   {
-    name: 'Purine',
-    path: '/purine',
-    component: () => import('@/pages/purine/index.vue')
+    name: 'Foods',
+    path: '/foods',
+    component: () => import('@/pages/foods/index.vue'),
+    children: [
+      {
+        name: 'List',
+        path: 'list',
+        component: () => import('@/pages/foods/list.vue'),
+        children: [
+          {
+            name: 'Food',
+            path: ':food',
+            component: () => import('@/pages/foods/food.vue')
+          }
+        ],
+        meta: { title: '列表' }
+      }
+    ],
+    meta: { title: '食物' }
   },
   {
     name: 'NotFound',

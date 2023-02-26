@@ -36,7 +36,7 @@ export default defineConfig({
     }
   },
   shortcuts: [
-    ['flex-row', 'flex flex-row'],
+    ['flex-row', 'flex flex-row flex-wrap'],
     ['flex-col', 'flex flex-col'],
     ['flex-center', 'flex justify-center items-center'],
     ['e-auto', 'pointer-events-auto'],

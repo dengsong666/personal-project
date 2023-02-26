@@ -1,9 +1,13 @@
 <script setup lang="ts">
-const a = await(await fetch('https://api.xygeng.cn/one/get/')).json()
+import { getDailySentence } from '@/api'
+
+const {
+  data: { content, origin }
+} = await getDailySentence()
 </script>
 
 <template>
-  <n-result status="404" title="你访问的内容不存在" :description="a">
+  <n-result status="404" title="你访问的内容不存在" :description="`${content} —— ${origin}`">
     <template #footer>
       <n-button @click="$router.push('/')">返回首页</n-button>
     </template>

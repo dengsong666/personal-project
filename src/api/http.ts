@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
-const service: AxiosInstance = axios.create({
+export const service = axios.create({
   baseURL: '/api',
   timeout: 30000
 })
@@ -31,13 +31,12 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
-    const { code, message, data } = response.data
-    // 根据自定义错误码判断请求是否成功
-    if (code === 200) return data
+    const { code = 200, msg = '', data = response.data } = response.data
+    if (code === 200) return { code, data, msg } as any
     else {
       // 处理业务错误。
       // Message.error(message)
-      return Promise.reject(new Error(message))
+      return Promise.reject(new Error(msg))
     }
   },
   (error: AxiosError) => {
@@ -46,4 +45,4 @@ service.interceptors.response.use(
   }
 )
 
-export const http = <T>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', config: AxiosRequestConfig): Promise<ResponseData<T>> => service.request({ ...config, method })
+export default <T = any>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', config: AxiosRequestConfig): Promise<ResponseData<T>> => service.request({ ...config, method })
