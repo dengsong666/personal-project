@@ -11,8 +11,4 @@ import '@/styles/reset.scss'
 </template>
 
 <style scoped>
-#app {
-  padding: 0 10vw;
-  min-width: 1440px;
-}
 </style>

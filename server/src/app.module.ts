@@ -1,26 +1,37 @@
-import { Module } from '@nestjs/common';
+import { FileController } from './modules/file/file.controller';
+import {
+  CacheInterceptor,
+  CacheModule,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { EmailModule } from './modules/email/email.module';
+import config from 'config';
+import { UserModule } from './modules/user/user.module';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'admin',
-      database: 'tongfeng',
-      // entities: ['src/**/*.entity{.ts,.js}'],
-      synchronize: true, // 生产环境建议关闭
-      logging: true,
-      autoLoadEntities: true,
-    }),
+  imports: [...config, EmailModule, UserModule, ScheduleModule.forRoot()],
+  controllers: [FileController, AppController],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule {
-  constructor(private readonly connection: Connection) {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('/');
+  }
 }
