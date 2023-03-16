@@ -3,7 +3,6 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { CrudConfigService } from '@nestjsx/crud';
 CrudConfigService.load({
   query: {
-    alwaysPaginate: true,
     maxLimit: 100,
     cache: 2000,
   },

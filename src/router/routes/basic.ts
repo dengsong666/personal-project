@@ -11,8 +11,8 @@ export const basicRoutes: RouteRecordRaw[] = [
     component: Home
   },
   {
-    name: 'Foods',
-    path: '/foods',
+    name: 'Food',
+    path: '/food',
     component: () => import('@/pages/foods/index.vue'),
     children: [
       {

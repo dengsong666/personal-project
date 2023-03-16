@@ -15,8 +15,16 @@ import { UserModule } from './modules/user/user.module';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
+import { FoodClassesModule } from './modules/food-classes/food-classes.module';
 @Module({
-  imports: [...config, EmailModule, UserModule, ScheduleModule.forRoot()],
+  imports: [
+    ...config,
+    EmailModule,
+    UserModule,
+    FoodClassesModule,
+
+    ScheduleModule.forRoot(),
+  ],
   controllers: [FileController, AppController],
   providers: [
     AppService,

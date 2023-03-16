@@ -30,7 +30,8 @@ export class ResponseInterceptor implements NestInterceptor {
       map((value) => {
         const { code = 0, msg = '', ...data } = value ?? {};
         const { method } = context.switchToHttp().getRequest();
-        delete data.password;
+        data.page && (data.list = data.data) && delete data.data; // 分页重命名
+        delete data.password; //删除密码
         return {
           data: isNotEmptyObject(data) ? (isArray(value) ? value : data) : null,
           msg: msg || action(method),

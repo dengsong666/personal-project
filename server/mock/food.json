@@ -1,0 +1,36 @@
+{
+  "table": "food",
+  "mockStartIndex": "auto",
+  "mockCount": 490,
+  "mockValueReference": "http://mockjs.com/examples.html#DPD",
+  "mock": {
+    "created_at": {
+      "type": "datetime",
+      "value": "@datetime()"
+    },
+    "updated_at": {
+      "type": "datetime",
+      "value": "@datetime()"
+    },
+    "deleted_at": {
+      "type": "datetime",
+      "value": ""
+    },
+    "name": {
+      "type": "varchar",
+      "value": "@cword(3,5)"
+    },
+    "img": {
+      "type": "varchar",
+      "value": "@image()"
+    },
+    "desc": {
+      "type": "varchar",
+      "value": "@cword(20,200)"
+    },
+    "classesId": {
+      "type": "int",
+      "value": "@integer(1,20)"
+    }
+  }
+}

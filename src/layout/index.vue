@@ -10,8 +10,8 @@ const menuOptions: MenuOption[] = [
     key: 'home'
   },
   {
-    label: () => h(RouterLink, { to: { name: 'Cookbook' }, innerHTML: '食谱' }),
-    key: 'cookbook'
+    label: () => h(RouterLink, { to: { name: 'Food' }, innerHTML: '食物' }),
+    key: 'food'
   },
   {
     label: '预防',

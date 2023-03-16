@@ -1,0 +1,28 @@
+{
+  "table": "food_classes",
+  "mockStartIndex": "auto",
+  "mockCount": 20,
+  "mockValueReference": "http://mockjs.com/examples.html#DPD",
+  "mock": {
+    "created_at": {
+      "type": "datetime",
+      "value": "@datetime()"
+    },
+    "updated_at": {
+      "type": "datetime",
+      "value": "@datetime()"
+    },
+    "deleted_at": {
+      "type": "datetime",
+      "value": ""
+    },
+    "name": {
+      "type": "varchar",
+      "value": "@cword(2,5)"
+    },
+    "img": {
+      "type": "varchar",
+      "value": "@image()"
+    }
+  }
+}

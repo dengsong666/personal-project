@@ -15,36 +15,11 @@ import { RolesGuard } from 'src/common/guard/role.guard';
 import { Request } from 'express';
 import { UserRole } from 'src/utils/enum';
 import { plainToInstance } from 'class-transformer';
+import { routes } from 'config/crud';
 
 @Crud({
   model: { type: UserEntity },
-  routes: {
-    createOneBase: {
-      decorators: [Roles(UserRole.ADMIN)],
-    },
-    createManyBase: {
-      decorators: [Roles(UserRole.ADMIN)],
-    },
-    deleteOneBase: {
-      decorators: [Roles(UserRole.ADMIN)],
-      returnDeleted: true,
-    },
-    updateOneBase: {
-      decorators: [Roles(UserRole.ADMIN)],
-    },
-    getOneBase: {
-      decorators: [Roles(UserRole.ADMIN)],
-    },
-    getManyBase: {
-      decorators: [Roles(UserRole.ADMIN)],
-    },
-    replaceOneBase: {
-      decorators: [Roles(UserRole.ADMIN)],
-    },
-    recoverOneBase: {
-      decorators: [Roles(UserRole.ADMIN)],
-    },
-  },
+  routes,
   query: {
     exclude: ['password'],
   },
