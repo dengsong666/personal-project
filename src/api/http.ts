@@ -17,6 +17,10 @@ interface ResponseData<T> {
   data: T
   code: string
 }
+const r =
+  (method: string) =>
+  <T = any>(config: AxiosRequestConfig): Promise<ResponseData<T>> =>
+    service.request({ ...config, method })
 /* 请求拦截器 */
 service.interceptors.request.use(
   (config) => {
@@ -44,5 +48,4 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-export default <T = any>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', config: AxiosRequestConfig): Promise<ResponseData<T>> => service.request({ ...config, method })
+export default { get: r('get'), post: r('post'), put: r('put'), patch: r('patch'), delete: r('delete') }
