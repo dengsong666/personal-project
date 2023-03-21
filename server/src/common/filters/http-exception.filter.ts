@@ -24,7 +24,7 @@ export class HttpExceptionFiter implements ExceptionFilter {
     const error: any = exception.getResponse();
 
     response.status(status).json({
-      status: status,
+      code: status,
       timestamp: new Date().toLocaleString(),
       path: request.url,
       error: typeof error == 'string' ? error : error.message || error.error,

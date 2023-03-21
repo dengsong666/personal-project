@@ -59,7 +59,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: `http://localhost:8888`, // 代理到 目标路径
+        target: `http://localhost:4000`, // 代理到 目标路径
         changeOrigin: true,
         rewrite: (path) => path.replace('/api', '')
       }

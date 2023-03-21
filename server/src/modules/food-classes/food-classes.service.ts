@@ -5,9 +5,7 @@ import { FoodClassesEntity } from './food-classes.entity';
 
 @Injectable()
 export class FoodClassesService extends TypeOrmCrudService<FoodClassesEntity>{
-
     constructor(@InjectRepository(FoodClassesEntity) repo) {
         super(repo);
     }
-
 }

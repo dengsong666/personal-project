@@ -1,3 +1,7 @@
+import { createDiscreteApi } from 'naive-ui'
+
+export const { message, notification, dialog, loadingBar } = createDiscreteApi(['message', 'dialog', 'notification', 'loadingBar'])
+
 // 类型
 export const Type = {
   value: (obj: any) => Object.prototype.toString.call(obj).replace(/^\[object (\S+)\]$/, '$1'),

@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { getAllFoodClasses } from '@/api'
 import Png from '@/assets/images/111.png'
+
+const { data } = await getAllFoodClasses()
+console.log(data)
+
 const classification = reactive([
   {
     name: '',

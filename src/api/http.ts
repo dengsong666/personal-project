@@ -1,12 +1,13 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosError, AxiosRequestConfig } from 'axios'
+import { message } from '@/utils'
 
 export const service = axios.create({
   baseURL: '/api',
   timeout: 30000
 })
 const errors: AnyObj = {
-  401: 'token 失效，请重新登录',
+  401: '未授权',
   403: '拒绝访问',
   404: '请求地址错误',
   500: '服务器故障',
@@ -40,11 +41,13 @@ service.interceptors.response.use(
     else {
       // 处理业务错误。
       // Message.error(message)
+
       return Promise.reject(new Error(msg))
     }
   },
   (error: AxiosError) => {
-    // Message.error(errors[status as unknown as string])
+    const { code = undefined } = error.response?.data as any
+    message.error(errors[code])
     return Promise.reject(error)
   }
 )
