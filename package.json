@@ -1,0 +1,28 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@prisma/client": "5.11.0",
+    "dayjs": "^1.11.10",
+    "echarts": "^5.5.0",
+    "lodash": "^4.17.21",
+    "nuxt": "^3.11.1",
+    "sass": "^1.72.0",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@css-render/vue3-ssr": "^0.15.12",
+    "@types/lodash": "^4.17.0",
+    "naive-ui": "^2.38.1",
+    "prisma": "^5.11.0"
+  }
+}
