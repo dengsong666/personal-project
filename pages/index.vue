@@ -218,7 +218,7 @@ async function onGetVol() {
     <div v-show="enabled.includes('gd')" id="mood1" class="chart"></div>
     <div v-show="enabled.includes('zt')" id="mood2" class="chart"></div>
     <div style="position: absolute;bottom: 20px;padding: 16px;">
-    <button @click="useFetch('/api/mood/get')">获取数据</button>
+      <!-- <button @click="useFetch('/api/mood/get')">获取数据</button> -->
       <n-checkbox-group v-model:value="enabled">
         <n-checkbox value="vol" label="成交量" />
         <n-checkbox value="mood" label="情绪" />
@@ -226,7 +226,7 @@ async function onGetVol() {
         <n-checkbox value="zt" label="涨停" />
       </n-checkbox-group>
       <n-button type="primary">
-        <n-popover trigger="hover">
+        <n-popover trigger="click">
           <template #trigger>
             <n-button type="primary">成交</n-button>
           </template>
