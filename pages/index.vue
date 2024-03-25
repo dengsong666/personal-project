@@ -8,13 +8,13 @@ const modelVol = reactive({
   time: "",
   bs: "S",
 })
-const { data: mood } = await useFetch('/api/mood/get')
+const { data: mood } = await useFetch('/api/mood')
 onMounted(() => renderChart());
 watch(() => enabled.value, () => renderChart())
 async function renderChart() {
   const data = mood.value || [];
   console.log(data);
-  const { data: new_mood } = await useFetch('/api/mood/post', { method: 'post', body: data.map((item) => item.date) })
+  const { data: new_mood } = await useFetch('/api/mood', { method: 'post', body: data.map((item) => item.date) })
   console.log(new_mood.value);
   setChart("#vol", {
     dataset: { source: data.map(({ date, all_vol, zt_vol, bx }) => ({ date, all_vol, zt_vol, ...bx })) as any },
@@ -218,7 +218,7 @@ async function onGetVol() {
     <div v-show="enabled.includes('gd')" id="mood1" class="chart"></div>
     <div v-show="enabled.includes('zt')" id="mood2" class="chart"></div>
     <div style="position: absolute;bottom: 20px;padding: 16px;">
-      <!-- <button @click="useFetch('/api/mood/get')">获取数据</button> -->
+      <!-- <button @click="useFetch('/api/mood')">获取数据</button> -->
       <n-checkbox-group v-model:value="enabled">
         <n-checkbox value="vol" label="成交量" />
         <n-checkbox value="mood" label="情绪" />
