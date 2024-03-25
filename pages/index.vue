@@ -3,12 +3,12 @@ import { NCheckboxGroup, NCheckbox, NButton, NPopover, NForm, NFormItem, NInput,
 const enabled = ref(["vol", "mood", "gd", "zt"])
 const h = computed(() => 100 / enabled.value.length + "%")
 const vol = ref(0)
-const { data: mood } = await useFetch('/api/mood/get')
 const modelVol = reactive({
   code: "",
   time: "",
   bs: "S",
 })
+const { data: mood } = await useFetch('/api/mood/get')
 onMounted(() => renderChart());
 watch(() => enabled.value, () => renderChart())
 async function renderChart() {
@@ -218,6 +218,7 @@ async function onGetVol() {
     <div v-show="enabled.includes('gd')" id="mood1" class="chart"></div>
     <div v-show="enabled.includes('zt')" id="mood2" class="chart"></div>
     <div style="position: absolute;bottom: 20px;padding: 16px;">
+    <button @click="useFetch('/api/mood/get')">获取数据</button>
       <n-checkbox-group v-model:value="enabled">
         <n-checkbox value="vol" label="成交量" />
         <n-checkbox value="mood" label="情绪" />
