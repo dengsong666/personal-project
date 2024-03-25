@@ -95,7 +95,7 @@ export default defineEventHandler(async (event) => {
     })
     return obj;
   }
-  const v_trade_date = await trade_date(dayjs().format("YYYYMMDD"), 60)
+  const v_trade_date = await trade_date(dayjs().add(1, "day").format("YYYYMMDD"), 60)
   const tasks = v_trade_date?.map(async (date: string) => {
     const v_lb = await lb(date)
     const v_fb = await fb(date)
