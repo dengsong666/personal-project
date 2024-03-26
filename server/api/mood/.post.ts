@@ -5,6 +5,8 @@ import { prisma } from '~/prisma';
 import { REQ } from '~/server/utils';
 
 export default defineEventHandler(async (event) => {
+  console.log("post");
+
   const _date = await readBody(event)
   const trade_date = async (date: string, prev = 30) => {
     const res: any = await REQ(`https://data.10jqka.com.cn/dataapi/limit_up/trade_day?date=${date}&stock=stock&next=1&prev=${prev}`)
@@ -96,6 +98,8 @@ export default defineEventHandler(async (event) => {
     return obj;
   }
   const v_trade_date = await trade_date(dayjs().add(1, "day").format("YYYYMMDD"), 60)
+  console.log(v_trade_date);
+
   const tasks = v_trade_date?.map(async (date: string) => {
     const v_lb = await lb(date)
     const v_fb = await fb(date)
