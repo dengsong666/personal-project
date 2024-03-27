@@ -1,7 +1,7 @@
 import { prisma } from "~/prisma"
 
 export default defineEventHandler(async (event) => {
-  console.log(666);
+  console.log("get");
 
   return prisma.mood.findMany()
 })

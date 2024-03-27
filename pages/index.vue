@@ -8,16 +8,15 @@ const modelVol = reactive({
   time: "",
   bs: "S",
 })
-const { data: mood } = await useFetch('/api/mood')
+const mood = await $fetch('/api/mood', { method: 'GET' })
 onMounted(() => renderChart());
 watch(() => enabled.value, () => renderChart())
 async function renderChart() {
-  const data = mood.value || [];
-  console.log(data?.at(-1));
-  const { data: new_mood } = await useFetch('/api/mood', { method: 'post', body: data.map((item: any) => item.date) })
-  console.log(new_mood.value);
+  console.log(mood?.at(-1));
+  const new_mood = await $fetch('/api/mood', { method: "POST", body: mood.map((item: any) => item.date) })
+  console.log(new_mood);
   setChart("#vol", {
-    dataset: { source: data.map(({ date, all_vol, zt_vol, bx }) => ({ date, all_vol, zt_vol, ...bx })) as any },
+    dataset: { source: mood.map(({ date, all_vol, zt_vol, bx }) => ({ date, all_vol, zt_vol, ...bx })) as any },
     yAxis: [{ name: "全市场成交额" }, { name: "涨停成交额" }],
     series: [
       {
@@ -60,7 +59,7 @@ async function renderChart() {
     ],
   });
   setChart("#mood", {
-    dataset: { source: data.map(({ date, ths_mood, zr_jsy }) => ({ date, ths_mood, ...zr_jsy })) as any },
+    dataset: { source: mood.map(({ date, ths_mood, zr_jsy }) => ({ date, ths_mood, ...zr_jsy })) as any },
     yAxis: [{ name: "情绪" }, { name: "收益率", max: 5, axisLabel: { formatter: "{value}%" } }],
     series: [
       {
@@ -106,7 +105,7 @@ async function renderChart() {
     ],
   });
   setChart("#mood1", {
-    dataset: { source: data.map((item) => ({ date: item.date, height: item.gdb?.height, name: item.gdb?.name, dm_num: item.dm_num, zt_fbl: item.zt_fbl, lbl: item.zt_jjl.all.ratio })) as any },
+    dataset: { source: mood.map((item) => ({ date: item.date, height: item.gdb?.height, name: item.gdb?.name, dm_num: item.dm_num, zt_fbl: item.zt_fbl, lbl: item.zt_jjl.all.ratio })) as any },
     yAxis: [
       { name: "赚钱效应", max: 15 },
       { name: "封板率", axisLabel: { formatter: "{value}%" } },
@@ -162,7 +161,7 @@ async function renderChart() {
   setChart("#mood2", {
     xAxis: {
       type: "category",
-      data: data.map((item) => item.date),
+      data: mood.map((item) => item.date),
       axisTick: { alignWithLabel: true },
       axisLabel: { formatter: (v) => `${v.slice(4, 6)}-${v.slice(6)}`, align: "center", interval: 10 },
     },
@@ -173,35 +172,35 @@ async function renderChart() {
         name: "涨停数量",
         barWidth: 5,
         yAxisIndex: 0,
-        data: data.map((item) => item.zt_num ?? 0),
+        data: mood.map((item) => item.zt_num ?? 0),
       },
       {
         type: "bar",
         name: "跌停数量",
         barWidth: 5,
         yAxisIndex: 0,
-        data: data.map((item) => item.dt_num ?? 0),
+        data: mood.map((item) => item.dt_num ?? 0),
       },
       {
         type: "line",
         smooth: true,
         name: "二板",
         yAxisIndex: 1,
-        data: data.map((item) => item.zt_jjl.two.ratio ?? 0),
+        data: mood.map((item) => item.zt_jjl.two.ratio ?? 0),
       },
       {
         type: "line",
         smooth: true,
         name: "三板",
         yAxisIndex: 1,
-        data: data.map((item) => item.zt_jjl!.three.ratio ?? 0),
+        data: mood.map((item) => item.zt_jjl!.three.ratio ?? 0),
       },
       {
         type: "line",
         smooth: true,
         name: "四板",
         yAxisIndex: 1,
-        data: data.map((item) => item.zt_jjl.four.ratio ?? 0),
+        data: mood.map((item) => item.zt_jjl.four.ratio ?? 0),
       },
     ],
   });
