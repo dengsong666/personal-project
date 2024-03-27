@@ -8,13 +8,13 @@ const modelVol = reactive({
   time: "",
   bs: "S",
 })
-const { data: mood } = await useFetch('/api/mood/')
+const { data: mood } = await useFetch('/api/mood')
 onMounted(() => renderChart());
 watch(() => enabled.value, () => renderChart())
 async function renderChart() {
   const data = mood.value || [];
-  console.log(data);
-  const { data: new_mood } = await useFetch('/api/mood/', { method: 'post', body: data.map((item) => item.date) })
+  console.log(data?.at(-1));
+  const { data: new_mood } = await useFetch('/api/mood', { method: 'post', body: data.map((item: any) => item.date) })
   console.log(new_mood.value);
   setChart("#vol", {
     dataset: { source: data.map(({ date, all_vol, zt_vol, bx }) => ({ date, all_vol, zt_vol, ...bx })) as any },
